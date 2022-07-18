@@ -20,7 +20,7 @@ export async function createSession(sessionData: CreateSessionData) {
   return await prisma.session.create({ data: sessionData });
 }
 
-export async function getSessionById(token: string) {
+export async function getSessionByToken(token: string) {
   return await prisma.session.findUnique({ where: { token } });
 }
 

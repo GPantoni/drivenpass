@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { getSessionById } from '../repositories/authRepository.js';
+import { getSessionByToken } from '../repositories/authRepository.js';
 import * as errorUtils from '../utils/errorUtils.js';
 
 export default async function validateTokenMiddleware(
@@ -11,10 +11,10 @@ export default async function validateTokenMiddleware(
   const token = authorization?.replace('Bearer ', '');
 
   if (!token) {
-    throw errorUtils.errorUnauthorized('Token');
+    throw errorUtils.errorUnprocessableEntity('Missing token');
   }
 
-  const session = await getSessionById(token);
+  const session = await getSessionByToken(token);
   if (!session) {
     throw errorUtils.errorUnauthorized('Invalid/Expired token');
   }
