@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import * as credentialService from '../services/credentialServices.js';
-import { InsertCredentialData } from '../repositories/credentialRepository';
+import * as credentialService from '../services/credentialService.js';
+import { InsertCredentialData } from '../repositories/credentialRepository.js';
 
 export async function createCredential(req: Request, res: Response) {
   const { title, url, username, password } = req.body;

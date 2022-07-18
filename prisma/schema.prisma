@@ -18,6 +18,7 @@ model User {
 
   Session    Session[]
   Credential Credential[]
+  Card       Card[]
   @@map("users")
 }
 
@@ -41,4 +42,21 @@ model Credential {
 
   @@unique([userId, title])
   @@map("credentials")
+}
+
+model Card {
+  id           Int     @id @default(autoincrement())
+  title        String
+  number       String
+  cardHolder   String
+  securityCode String
+  expiration   String
+  password     String
+  isVirtual    Boolean @default(false)
+  type         String
+  userId       Int
+  user         User    @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+  @@map("cards")
 }
