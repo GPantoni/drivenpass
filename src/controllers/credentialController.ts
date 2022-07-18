@@ -3,7 +3,8 @@ import * as credentialService from '../services/credentialServices.js';
 import { InsertCredentialData } from '../repositories/credentialRepository';
 
 export async function createCredential(req: Request, res: Response) {
-  const { userId, title, url, username, password } = req.body;
+  const { title, url, username, password } = req.body;
+  const { userId } = res.locals;
 
   const credentialData: InsertCredentialData = {
     userId,
@@ -19,7 +20,7 @@ export async function createCredential(req: Request, res: Response) {
 }
 
 export async function getCredential(req: Request, res: Response) {
-  const { userId } = req.body;
+  const { userId } = res.locals;
   const id = parseInt(req.params.credentialId);
 
   const credential = await credentialService.getCredential(id, userId);
@@ -28,7 +29,7 @@ export async function getCredential(req: Request, res: Response) {
 }
 
 export async function getAllCredentials(req: Request, res: Response) {
-  const { userId } = req.body;
+  const { userId } = res.locals;
 
   const credentials = await credentialService.getAllCredentials(userId);
 
@@ -36,7 +37,7 @@ export async function getAllCredentials(req: Request, res: Response) {
 }
 
 export async function deleteCredential(req: Request, res: Response) {
-  const { userId } = req.body;
+  const { userId } = res.locals;
   const id = parseInt(req.params.credentialId);
 
   await credentialService.deleteCredential(id, userId);

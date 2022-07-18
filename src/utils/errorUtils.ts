@@ -32,3 +32,10 @@ export function errorUnauthorized(entity: string) {
     message: `${entity} is not valid`,
   };
 }
+
+export function errorUnprocessableEntity(entity: string) {
+  return {
+    type: 'error_unprocessable_entity',
+    message: `${entity}`,
+  };
+}
