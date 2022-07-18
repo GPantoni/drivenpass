@@ -20,4 +20,8 @@ export async function createSession(sessionData: CreateSessionData) {
   return await prisma.session.create({ data: sessionData });
 }
 
+export async function getSessionById(token: string) {
+  return await prisma.session.findUnique({ where: { token } });
+}
+
 type CreateSessionData = Omit<Session, 'id'>;

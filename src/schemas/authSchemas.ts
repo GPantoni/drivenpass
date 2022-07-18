@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { SignUserData } from '../services/authService';
+import { SignUserData } from '../services/authService.js';
 
 export const signSchema = Joi.object<SignUserData>({
   email: Joi.string().email().required(),

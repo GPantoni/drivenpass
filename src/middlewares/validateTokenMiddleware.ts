@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
+import { getSessionById } from '../repositories/authRepository.js';
 import * as errorUtils from '../utils/errorUtils.js';
-import Jwt, { JwtPayload } from 'jsonwebtoken';
 
-export async function validateTokenMiddleware(
+export default async function validateTokenMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
@@ -14,14 +14,11 @@ export async function validateTokenMiddleware(
     throw errorUtils.errorUnauthorized('Token');
   }
 
-  try {
-    //Jwt key contains {userId: xxx, name: xxx};
-    const userData = Jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
-    const { userId } = userData;
-    res.locals.userId = userId;
-
-    next();
-  } catch {
-    res.sendStatus(401);
+  const session = await getSessionById(token);
+  if (!session) {
+    throw errorUtils.errorUnauthorized('Invalid/Expired token');
   }
+
+  res.locals.userId = session.userId;
+  next();
 }
