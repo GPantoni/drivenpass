@@ -19,6 +19,7 @@ model User {
   Session    Session[]
   Credential Credential[]
   Card       Card[]
+  Wifi       Wifi[]
   @@map("users")
 }
 
@@ -59,4 +60,16 @@ model Card {
 
   @@unique([userId, title])
   @@map("cards")
+}
+
+model Wifi {
+  id       Int    @id @default(autoincrement())
+  title    String
+  name     String
+  password String
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+  @@map("wifis")
 }
